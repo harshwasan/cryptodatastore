@@ -81,38 +81,39 @@ namespace cryptodatastore
                                 }
                                 else
                                 {
-                                    myHT.Add(dt1.Rows[j]["userid"], " " + dt2.Rows[i]["currency"].ToString() + "( Notification limit set at:" + dt1.Rows[j]["cost"].ToString() + ", Current Price:"+ dt2.Rows[i]["price"] .ToString()+ " )") ;
+                                    myHT.Add(dt1.Rows[j]["userid"], " " + dt2.Rows[i]["currency"].ToString() + "( Notification limit set at:" + dt1.Rows[j]["cost"].ToString() + ", Current Price:" + dt2.Rows[i]["price"].ToString() + " )");
                                     string strValue1 = (string)myHT[dt1.Rows[j]["userid"]];
                                 }
 
                             }
-                        
-                        else {
-                                var safety = (Convert.ToDouble(dt1.Rows[j]["costboughtat"]) + ((Convert.ToDouble(dt1.Rows[j]["costboughtat"]) * 20) / 100));
-                                if (safety >= Convert.ToDouble(dt2.Rows[i]["price"]))
-                                 {
-                                   
+                        }
+                        else
+                        {
+                            var safety = (Convert.ToDouble(dt1.Rows[j]["costboughtat"]) + ((Convert.ToDouble(dt1.Rows[j]["costboughtat"]) * 20) / 100));
+                            if (safety >= Convert.ToDouble(dt2.Rows[i]["price"]))
+                            {
 
-                                    if (myHT.Contains(dt1.Rows[j]["userid"]))
-                                    {
-                                        string strValue1 = (string)myHT[dt1.Rows[j]["userid"]];
 
-                                        myHT[dt1.Rows[j]["userid"]] = strValue1 + ", " + dt2.Rows[i]["currency"].ToString() + "( Bought at:" + dt1.Rows[j]["costboughtat"].ToString() + ", Current Price:" + dt2.Rows[i]["price"].ToString() + " )";
+                                if (myHT.Contains(dt1.Rows[j]["userid"]))
+                                {
+                                    string strValue1 = (string)myHT[dt1.Rows[j]["userid"]];
 
-                                    }
-                                    else
-                                    {
-                                          myHT.Add(dt1.Rows[j]["userid"], "" + dt2.Rows[i]["currency"].ToString() + "( Bought at:" + dt1.Rows[j]["costboughtat"].ToString() + ", Current Price:" + dt2.Rows[i]["price"].ToString() + " )");
-                                          string strValue1 = (string)myHT[dt1.Rows[j]["userid"]];
-                                    }
+                                    myHT[dt1.Rows[j]["userid"]] = strValue1 + ", " + dt2.Rows[i]["currency"].ToString() + "( Bought at:" + dt1.Rows[j]["costboughtat"].ToString() + ", Current Price:" + dt2.Rows[i]["price"].ToString() + " )";
 
                                 }
+                                else
+                                {
+                                    myHT.Add(dt1.Rows[j]["userid"], "" + dt2.Rows[i]["currency"].ToString() + "( Bought at:" + dt1.Rows[j]["costboughtat"].ToString() + ", Current Price:" + dt2.Rows[i]["price"].ToString() + " )");
+                                    string strValue1 = (string)myHT[dt1.Rows[j]["userid"]];
+                                }
 
-
-                         }
+                            }
 
 
                         }
+
+
+                        
 
                     }
 
@@ -137,7 +138,7 @@ namespace cryptodatastore
                 var fromAddress = new MailAddress("cryptonotificationmailer@gmail.com", "crypto");
                 var toAddress = new MailAddress(dt3.Rows[0]["email"].ToString(), dt3.Rows[0]["username"].ToString());
                 const string fromPassword = "cryptomailer";
-                const string subject = "test";
+                const string subject = "Notification for Incurring Loss";
                 string body = "<p>Greetings " + dt3.Rows[0]["username"] + "</p><br><p>The prices of your invested coins namely " + Array + " are currently decreasing below the defined lower limit</p><br><p>This mail was sent to you to notify the change in the prices of the coins<br> Please make your decision accordingly to reduce your losses</p><p>With Regards,<br>Crpto<br>Customer Support Team</p>";
 
                     var smtp = new SmtpClient
